@@ -136,3 +136,16 @@ def update_student_data(id, student : Update_student):
     save_data(student_data)
     return JSONResponse(status_code=200, content="Student data updated successfully !!")
     
+    
+@app.delete("/student/{id}")
+def delete_student(id : str):
+    student_data = load_data()
+    
+    if id not in student_data:
+        raise HTTPException(status_code=404, detail="Student not found !!")
+    
+    del student_data[id]
+    
+    save_data(student_data)
+    
+    return JSONResponse(status_code=200, content=f"Student data for id :- {id} has been deleted")
